@@ -1,4 +1,4 @@
-import ytdownloader from '../config/ytdlp.config.js';
+import { ytdownloader } from '../config/ytdlp.config.js';
 import { log, err } from '../config/logger.config.js';
 
 export default {

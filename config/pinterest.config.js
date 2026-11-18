@@ -1,6 +1,7 @@
 import axios from 'axios';
+import * as pinModule from 'pinterest-dl';
 
-export default async function searchPinterest(query) {
+export async function searchPinterest(query) {
     try {
         const response = await axios.get(`https://api.siputzx.my.id/api/s/pinterest?query=${encodeURIComponent(query)}`);
         
