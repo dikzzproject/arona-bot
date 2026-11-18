@@ -1,5 +1,9 @@
 <div align="center">
 
+<img src="https://i.pinimg.com/736x/1d/72/97/1d7297046b65a0208688859dbbb7f54a.jpg" alt="Arona Bot Banner" width="100%" style="border-radius: 12px; max-width: 800px;" />
+
+<br /><br />
+
 # Arona Bot
 
 **A lightweight, modular, and high-performance multi-purpose automation bot.**
