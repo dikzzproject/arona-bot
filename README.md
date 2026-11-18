@@ -6,11 +6,11 @@
 
 # Arona Bot
 
-**A lightweight, modular, and high-performance multi-purpose automation bot.**
+**A lightweight, modular, and personal WhatsApp automation bot built with JavaScript.**
 
 [![License](https://img.shields.io/badge/License-MIT-black.svg?style=flat-square)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-black.svg?style=flat-square)](https://nodejs.org/)
-[![Status](https://img.shields.io/badge/Status-Active-black.svg?style=flat-square)]()
+[![Language](https://img.shields.io/badge/JavaScript-100%25-black.svg?style=flat-square)]()
 
 [Overview](#overview) • [Architecture](#architecture) • [Installation](#installation) • [Configuration](#configuration) • [Usage](#usage)
 
@@ -20,13 +20,13 @@
 
 ## Overview
 
-**Arona Bot** is designed with simplicity, speed, and extensibility at its core. Built on a modular command handler architecture, it minimizes overhead while providing seamless integration for automated workflows, moderation, and utility commands.
+**Arona Bot** is a personal WhatsApp bot engineered for speed, modularity, and effortless extensibility. Designed around a clean plugin and event-driven architecture, it allows rapid feature expansion while keeping core socket management isolated and maintainable.
 
 ### Key Highlights
-- **Modular Architecture** — Isolated plugin system for effortless command and event expansion.
-- **Low Footprint** — Optimized asynchronous execution with minimal memory consumption.
-- **Zero-Config Ready** — Sensible defaults with clean environment variable overrides.
-- **Graceful Error Handling** — Built-in fault tolerance to prevent runtime crashes.
+- **Plugin-Based System** — Drop-in command modules inside `plugins/` for instant feature integration.
+- **Event-Driven Core** — Dedicated socket and message event listeners managed under `events/`.
+- **Session Persistence** — Reliable multi-device authentication state handling stored in `auth/`.
+- **Centralized Configuration** — Streamlined bot settings and owner credentials via `config/`.
 
 ---
 
@@ -34,11 +34,11 @@
 
 ```text
 arona-bot/
-├── src/
-│   ├── commands/       # Modular command handlers
-│   ├── events/         # Event listeners and hooks
-│   ├── lib/            # Core utilities and helpers
-│   └── index.js        # Application entry point
-├── .env.example        # Environment variable template
+├── auth/               # WhatsApp session & multi-device credentials
+├── config/             # Bot settings, prefixes, and owner configurations
+├── events/             # Socket connection & message event handlers
+├── plugins/            # Modular command plugins & features
+├── index.js            # Main application & socket entry point
 ├── package.json        # Project metadata and dependencies
-└── README.md           # Documentation
+├── package-lock.json   # Locked dependency tree
+└── README.md           # Project documentation
