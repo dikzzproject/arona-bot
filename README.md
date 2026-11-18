@@ -12,7 +12,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-black.svg?style=flat-square)](https://nodejs.org/)
 [![Language](https://img.shields.io/badge/JavaScript-100%25-black.svg?style=flat-square)]()
 
-[Overview](#overview) • [Architecture](#architecture) • [Installation](#installation) • [Configuration](#configuration) • [Usage](#usage)
+[Overview](#overview) • [Architecture](#architecture) • [Installation & Setup](#installation--setup) • [Usage](#usage) • [Contributing](#contributing)
 
 </div>
 
