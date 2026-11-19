@@ -92,8 +92,8 @@ function ytstream(videoUrl) {
 async function ytfastsearch(query) {
   const metaArgs = [
     `ytsearch1:${query}`,
-    '-f', 'bv*[height<=480][vcodec^=avc1]+ba[acodec^=mp4a]/bv*[height<=480]+ba/b[height<=480]/b',
-    '--print', '%(id)s|||%(title)s|||%(uploader)s|||%(duration_string)s|||%(vcodec)s|||%(webpage_url)s',
+    '-f', 'ba[acodec^=mp4a]/ba/b',
+    '--print', '%(id)s|||%(title)s|||%(uploader)s|||%(duration_string)s|||%(webpage_url)s',
     '--no-warnings',
     '--no-playlist'
   ];
@@ -101,39 +101,30 @@ async function ytfastsearch(query) {
   const { stdout } = await execFileAsync('yt-dlp', metaArgs, {
     maxBuffer: 1024 * 1024
   });
-
+  
   const line = (stdout || '').trim().split('\n')[0];
   if (!line) return null;
 
-  const [id, title, channel, duration, vcodec, webpageUrl] = line.split('|||');
-  
-  const isAlreadyH264 = (vcodec || '').includes('avc1');
+  const [id, title, channel, duration, webpageUrl] = line.split('|||');
+  const url = webpageUrl || `https://youtube.com{id}`;
 
   const buffer = await new Promise((resolve, reject) => {
     const ytdlpArgs = [
-      webpageUrl || `https://youtube.com{id}`,
-      '-f', 'bv*[height<=480][vcodec^=avc1]+ba[acodec^=mp4a]/bv*[height<=480]+ba/b[height<=480]/b',
-      '--merge-output-format', 'mkv',
+      url,
+      '-f', 'ba[acodec^=mp4a]/ba/b',
       '--concurrent-fragments', '4',
       '--no-warnings',
       '-o', '-'
     ];
 
-    const videoCodecArgs = isAlreadyH264
-      ? ['-c:v', 'copy']
-      : ['-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '28', '-pix_fmt', 'yuv420p'];
-
     const ffmpegArgs = [
       '-i', 'pipe:0',
-      '-map', '0:v:0',
-      '-map', '0:a:0?',
-      ...videoCodecArgs,
-      '-c:a', 'aac',
-      '-b:a', '96k',
+      '-vn',
+      '-c:a', 'libmp3lame',
+      '-b:a', '128k',
       '-ar', '44100',
       '-ac', '2',
-      '-movflags', 'frag_keyframe+empty_moov+default_base_moof',
-      '-f', 'mp4',
+      '-f', 'mp3',
       'pipe:1'
     ];
 
@@ -156,18 +147,12 @@ async function ytfastsearch(query) {
       if (code === 0 && chunks.length > 0) {
         resolve(Buffer.concat(chunks));
       } else {
-        reject(new Error(`Gagal memproses video: ${errorLog.slice(-200)}`));
+        reject(new Error(`Gagal memproses audio: ${errorLog.slice(-200)}`));
       }
     });
   });
 
-  return {
-    title: title || 'Tanpa Judul',
-    url: webpageUrl || `https://youtube.com${id}`,
-    channel: channel || 'Tidak diketahui',
-    duration: duration || 'Tidak diketahui',
-    buffer
-  };
+  return { id, title, channel, duration, url, buffer };
 }
 
 const ytdownloader = (type, url) => {
