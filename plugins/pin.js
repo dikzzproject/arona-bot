@@ -4,7 +4,7 @@ import { log, err } from '../config/logger.config.js';
 export default {
   command: 'pin',
   exec: async ({ sock, msg, body, reply, react }) => {
-    const query = body.slice(6).trim();
+    const query = body.slice(4).trim();
     if (!query) return reply('Harap Masukan query pencarian!');
 
     try {

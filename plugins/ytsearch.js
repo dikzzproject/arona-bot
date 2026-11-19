@@ -12,22 +12,22 @@ export default {
 
     try {
       react('⏳');
-      const video = await ytfastsearch(query);
-      if (!video) {
+      const audio = await ytfastsearch(query);
+      if (!audio) {
         react('❌');
         reply('Video tidak ditemukan');
         return;
       }
 
-      const desc = `*${video.title}*\n` +
+      /*const desc = `*${video.title}*\n` +
                     `Channel: ${video.channel}\n` +
                     `Durasi: ${video.duration}\n` +
-                    `Link: ${video.url}`;
+                    `Link: ${video.url}`;*/
       
       await sock.sendMessage(msg.key.remoteJid, {
-        video: video.buffer,
-        mimetype: 'video/mp4',
-        caption: desc },{
+        audio: audio.buffer,
+        mimetype: 'audio/mpeg',
+        fileName: `${audio.title}.mp3` },{
         quoted: msg
       }).then(() => react('✅'))
     } catch (e) {
